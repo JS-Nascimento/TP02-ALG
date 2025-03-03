@@ -2,12 +2,16 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 cidade = {
-    "Centro": ["Norte", "Sul", "Leste", "Oeste"],
-    "Norte": ["Centro", "Leste", "Oeste"],
-    "Sul": ["Centro", "Leste", "Sudoeste"],
-    "Leste": ["Centro", "Norte", "Sul"],
-    "Oeste": ["Centro", "Norte"],
-    "Sudoeste": ["Sul"]
+    "Centro": ["Lapa", "Santa Teresa", "Tijuca"],
+    "Copacabana": ["Ipanema", "Botafogo"],
+    "Ipanema": ["Copacabana", "Leblon"],
+    "Leblon": ["Ipanema", "Botafogo"],
+    "Botafogo": ["Copacabana", "Leblon", "Flamengo"],
+    "Flamengo": ["Botafogo", "Centro"],
+    "Barra da Tijuca": ["Flamengo", "Tijuca"],
+    "Santa Teresa": ["Centro", "Lapa"],
+    "Lapa": ["Centro", "Santa Teresa", "Tijuca"],
+    "Tijuca": ["Centro", "Lapa", "Barra da Tijuca"]
 }
 
 vertices = list(cidade.keys())
@@ -16,7 +20,6 @@ print("Bairros (vértices):", vertices)
 arestas = set()
 for bairro in cidade:
     for vizinho in cidade[bairro]:
-
         if (vizinho, bairro) not in arestas:
             arestas.add((bairro, vizinho))
 print("Ruas (arestas):", arestas)
@@ -30,5 +33,5 @@ for bairro, vizinhos in cidade.items():
 pos = nx.spring_layout(G)
 
 nx.draw(G, pos, with_labels=True, node_color='lightgreen', node_size=2000, font_size=10, edge_color='gray')
-plt.title("Representação dos Bairros e Ruas da Cidade")
+plt.title("Representação dos Bairros do Rio de Janeiro e suas Conexões")
 plt.show()
